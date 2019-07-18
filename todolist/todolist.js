@@ -1,30 +1,42 @@
 $(document).ready(function(){
-    $("#add").click(function(){
-      var inputValue = $("#input").val();
-      $("#toDoList").append(
-        `<div class="toDos">
-          <input type="checkbox" class="status">
-          <p>${inputValue}</p>
-                  <button class="delete">Delete</button>
-              </div>`
-      );
-      
-      $(".status").each(function(){
-        $(this).click(function(){
-          var status = $(this).prop("checked");
-          if(status == true){
-            $(this).parent().children("p").css({"text-decoration": "line-through","color": "#a0a0a0"});
-          }else if(status == false){
-             $(this).parent().children("p").css({"text-decoration": "none","color": "black"});
-          };
-        });
-      });
+  $("#add").click(function(){
+    var inputValue = $("#input").val();
+    $("#toDoList").append(
+      `<div class="toDos">
+        <p id="item">${inputValue}</p>
+        <button id="inProject">To Do</button>
+        </div>`
+    );
+
+    $("#delete").click(function(){
+      $(this).click(function(){
+        $(this).closest('div').remove(); 
+      })
+    });
+    
+    $("#inProject").click(function(){
+      $(this).click(function(){
+        var todoItem = $(this).parent().children("p").text();
+        $("#doingItems").append(
+          `<div class="toDos2">
+            <p>${todoItem}</p>
+            <button id="done">Done</button>
+            </div>`
+        );
+      })
+    });
   
-      $(".delete").each(function(){
-        $(this).click(function(){
-         $(this).closest('div').remove(); 
-        })
+    $("#done").click(function(){
+      $(this).click(function(){
+        var finishItem = $(this).parent().children("p").text();
+        $("#finishItems").append(
+          `<div class="toDos3">
+            <p>${finishItem}</p>
+            <button id="delete">delete</button>
+            </div>`
+        );
       })
     });
   });
+});
   
