@@ -5,11 +5,17 @@ var todolist = new Vue({
         todolists: [],
         doinglist: [],
         finishlist: [],
+        show: true,
     },
+
     methods: {
         add: function() {
-          this.todolists.push(this.item);
-          this.item = '';
+            if (this.item == ""){
+                alert("please enter something")
+            }else{
+                this.todolists.push(this.item);
+                this.item = '';
+            }
         },
         handleTransferDoingItem: function(value,index){
             this.doinglist.push(value);
@@ -28,8 +34,10 @@ var todolist = new Vue({
 
 Vue.component("todo-item",{
     props: ['content', 'index'],
-    template: '<div>{{ content }}<button @click="doingItem">執行</button></div>',
-    
+    template: `<li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ content }}
+                <span class="badge badge-primary badge-pill" @click="doingItem">執行</span>
+               </li>`,
     methods: {
         doingItem: function() {
             this.$emit('doing', this.content, this.index);
@@ -39,7 +47,10 @@ Vue.component("todo-item",{
 
 Vue.component("doing-item",{
     props: ['content', 'index'],
-    template: '<div>{{ content }}<button @click="finishItem">完成</button></div>',
+    template: `<li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ content }}
+                <span class="badge badge-primary badge-pill" @click="finishItem">完成</span>
+               </li>`,
 
     methods: {
         finishItem: function() {
@@ -50,7 +61,10 @@ Vue.component("doing-item",{
 
 Vue.component("finish-item",{
     props: ['content', 'index'],
-    template: '<div>{{ content }}<button @click="deleteItem">刪除</button></div>',
+    template: `<li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ content }}
+                <span class="badge badge-primary badge-pill" @click="deleteItem">刪除</span>
+               </li>`,
 
     methods: {
         deleteItem: function() {
@@ -58,3 +72,4 @@ Vue.component("finish-item",{
         },
     }
 })
+
